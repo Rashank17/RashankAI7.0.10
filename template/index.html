@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RashankAI</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; margin: 2rem; background: #eef; }
+    .response { margin-top: 1rem; font-size: 1.2rem; }
+  </style>
+</head>
+<body>
+  <h1>🤖 RashankAI</h1>
+  <p>Ask me anything!</p>
+  <input id="question" type="text" placeholder="Type a question..." style="width:80%; padding:10px;" />
+  <button onclick="getAnswer()">Ask</button>
+  <div class="response" id="response"></div>
+
+  <script>
+    async function getAnswer() {
+      const q = document.getElementById("question").value;
+      const r = document.getElementById("response");
+      r.textContent = "Thinking... 🤔";
+      const res = await fetch("/api/ask?q=" + encodeURIComponent(q));
+      const data = await res.json();
+      r.textContent = data.answer || data.error || "No answer found.";
+    }
+  </script>
+</body>
+</html>
